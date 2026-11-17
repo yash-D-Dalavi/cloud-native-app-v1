@@ -1,13 +1,19 @@
+import os
+import socket
 from flask import Flask, jsonify
 
 app = Flask(__name__)
+
+APP_VERSION = "2.0.0"
 
 @app.route('/')
 def home():
     return jsonify({
         "message": "Welcome to Cloud-Native Containerized Application!",
         "status": "Success",
-        "version": "1.0.0"
+        "version": APP_VERSION,
+        "environment": os.getenv("APP_ENV", "development"),
+        "served_by": socket.gethostname()
     })
 
 @app.route('/health')
